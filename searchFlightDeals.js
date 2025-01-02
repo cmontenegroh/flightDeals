@@ -8,7 +8,7 @@ const amadeus = new Amadeus({
 });
 
 // Función para buscar ofertas de vuelos
-const searchFlightDeals = async () => {
+const searchFlightDeals = async (maxPrice) => {
   try {
     // Solicitar ofertas de vuelos desde Amadeus
     const response = await amadeus.shopping.flightOffersSearch.get({
@@ -26,9 +26,17 @@ const searchFlightDeals = async () => {
       return;
     }
 
+    // Filtrar vuelos por precio máximo
+    const filteredFlights = flights.filter(flight => flight.price.total <= maxPrice);
+
+    if (filteredFlights.length === 0) {
+      console.log('No se encontraron vuelos que coincidan con los criterios.');
+      return;
+    }
+
     // Mostrar las ofertas encontradas en la consola
     console.log('Ofertas de vuelos encontradas:');
-    flights.forEach((flight, index) => {
+    filteredFlights.forEach((flight, index) => {
       const price = flight.price.total;
       const currency = flight.price.currency;
       const airline = flight.validatingAirlineCodes[0];
@@ -44,9 +52,7 @@ const searchFlightDeals = async () => {
   }
 };
 
-// Ejecutar la búsqueda de vuelos
-searchFlightDeals();
-
-
+// Ejecutar la búsqueda de vuelos con un precio máximo de 1000
+searchFlightDeals(600);
 
 
