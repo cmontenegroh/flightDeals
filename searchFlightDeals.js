@@ -13,10 +13,11 @@ const searchFlightDeals = async (maxPrice) => {
     // Solicitar ofertas de vuelos desde Amadeus
     const response = await amadeus.shopping.flightOffersSearch.get({
       originLocationCode: 'EZE', // Aeropuerto de origen (ejemplo: Ezeiza)
-      destinationLocationCode: 'CDG', // Aeropuerto de destino (ejemplo: Charles de Gaulle)
-      departureDate: '2025-01-15', // Fecha de salida
+      destinationLocationCode: 'MAD', // Aeropuerto de destino (ejemplo: Charles de Gaulle)
+      departureDate: '2025-01-28', // Fecha de salida
       adults: 1, // Número de pasajeros adultos
       max: 5, // Máximo número de resultados
+      // addOneWayOffers: true,
     });
 
     const flights = response.data;
@@ -53,6 +54,6 @@ const searchFlightDeals = async (maxPrice) => {
 };
 
 // Ejecutar la búsqueda de vuelos con un precio máximo de 1000
-searchFlightDeals(600);
+searchFlightDeals(1000);
 
 
